@@ -1,10 +1,9 @@
 import React from 'react';
+import RoutersContainer from './routers/RoutersContainer';
 
 function App() {
   return (
-    <div>
-      as
-    </div>
+      <RoutersContainer />
   );
 }
 
