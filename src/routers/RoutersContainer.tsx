@@ -7,7 +7,7 @@ const RoutersContainer: () => JSX.Element = ()=>{
             <BrowserRouter>
                 <Routes>
                     {
-                        Routers.map(({path, component: Component}: IRouteItem,index:number)=> <Route key={index} path={path} element={<Component />} /> )
+                        Routers.map(({path, component: Component}: IRouteItem,index:number) => <Route key={index} path={path} element={<Component />} /> )
                     }
                 </Routes>
             </BrowserRouter>

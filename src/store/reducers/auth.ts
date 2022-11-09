@@ -3,10 +3,8 @@ import { AuthActionTypes, AuthState, AuthTypes } from "../types/auth";
 
 const initialState: AuthState = {
     isLoggedIn: false,
-    user: null,
     authLoading: false,
-    errors: [],
-    passwordResetToken: "",
+    user: null,
 }
 
 type ReducerType = Reducer<AuthState,AuthActionTypes>
@@ -19,15 +17,22 @@ const reducer: ReducerType = (state = initialState, action: AuthActionTypes) => 
         case AuthTypes.LOGIN_REQUEST_SUCCESS:
             return {
                 ...state,
-                loading: false,
-                isLoggedIn: false,
+                authLoading: false,
+                isLoggedIn: true,
                 user: action.user,
             }; 
 
+            case AuthTypes.LOGOUT_REQUEST_SUCCESS:
+                return {
+                    ...state,
+                    authLoading: false,
+                    isLoggedIn: false,
+                    user: null,
+                }; 
         case AuthTypes.SET_LOADING:
             return {
                 ...state,
-                isLoggedIn: action.loading,
+                authLoading: action.loading,
             }; 
 
         default:

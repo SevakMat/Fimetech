@@ -1,51 +1,91 @@
-import { AppDispatch } from ".."
-import { loginRequest } from "../../services/auth.service"
-import { LoginData } from "../../services/types"
+import { NavigateFunction } from "react-router-dom";
+import { toast } from "react-toastify";
+import { AppDispatch } from "..";
+import {
+  loginRequest,
+  loginRequestTest,
+  logOutRequestTest,
+  SignUpRequestTest,
+} from "../../services/auth.service";
+import { LoginData, SignInData } from "../../services/types";
+import {
+  loginRequestSuccess,
+  logOutRequestSuccess,
+  setLoading,
+} from "../actions/auth.actions";
 
-export const loginEffect = (loginData: LoginData): any => {
-    return async (dispatch: AppDispatch) => {
+export const loginEffect = (
+  loginData: LoginData,
+  navigate: NavigateFunction
+): any => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setLoadingEffect(true));
+      // Get user
+      const result = await loginRequestTest(loginData);
+      const {
+        data: { accessToken, refreshToken, user },
+      } = result;
+      await localStorage.setItem("accessToken", accessToken);
+      await localStorage.setItem("refreshToken", refreshToken);
+      dispatch(loginRequestSuccess(user));
 
-        try {
-           // Get user
-            const result = await loginRequest(loginData)
-            console.log(result);
-            
-            // const {
-            //     data: {user, accessToken, refreshToken},
-            // } = result
-            // await localStorage.setItem("accessToken", accessToken)
-            // await localStorage.setItem("refreshToken", refreshToken)
+      toast.success("Successfully logged in");
+      navigate("/dashboard");
 
-        //     // Set user
-        //     dispatch(loginRequestSuccess(user))
-
-        //     // Show alerts
-        //     toast({
-        //         title: "Login",
-        //         description: "Successfully logged in",
-        //         status: "success",
-        //         position: "top-right",
-        //         duration: 3000,
-        //         isClosable: true,
-        //     })
-        //     dispatch(setLoading(false))
-        // } catch (error: any) {
-        //     // Set error
-        //     dispatch(loginRequestFailure([error?.response?.data?.message]))
-
-        //     // Show alert
-        //     toast({
-        //         title: "Login",
-        //         description: error?.response?.data?.message,
-        //         status: "error",
-        //         position: "top-right",
-        //         duration: 3000,
-        //         isClosable: true,
-        //     })
-        //     dispatch(setLoading(false))
-        } finally {
-            // dispatch(setLoading(false))
-        }
+      dispatch(setLoadingEffect(false));
+    } catch (error: any) {
+      dispatch(setLoadingEffect(false));
+      toast.error("Logined faild");
+    } finally {
+      dispatch(setLoadingEffect(false));
     }
-}
+  };
+};
+export const setLoadingEffect = (loading: boolean): any => {
+  return async (dispatch: AppDispatch) => {
+    dispatch(setLoading(loading));
+  };
+};
 
+export const logOutEffect = (navigate: NavigateFunction): any => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setLoadingEffect(true));
+      // Get user
+     await logOutRequestTest();
+
+      await localStorage.clear();
+
+      dispatch(logOutRequestSuccess());
+
+      toast.success("Successfully logout");
+      navigate("/login");
+      dispatch(setLoadingEffect(false));
+    } catch (error: any) {
+      dispatch(setLoadingEffect(false));
+      toast.error("Logaut faild");
+    } finally {
+      dispatch(setLoadingEffect(false));
+    }
+  };
+};
+export const signUpEffect = (signInData: SignInData,navigate:NavigateFunction): any => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setLoadingEffect(true));
+      // Get user
+      await SignUpRequestTest(signInData);
+      
+      toast.success("Successfully sign Up");
+      navigate('/login');
+
+      dispatch(setLoadingEffect(false));
+    } catch (error: any) {
+      dispatch(setLoadingEffect(false));
+      toast.error("Logined faild");
+    } finally {
+      dispatch(setLoadingEffect(false));
+    }
+  };
+};

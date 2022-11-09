@@ -6,15 +6,18 @@ import { IRouteItem } from "./types"
 const Routers: IRouteItem[] = [
     {
         path:"/dashboard",
-        component: DashboardPage
+        component: DashboardPage,
+        private: true
     },
     {
         path:"/login",
-        component: LoginPage
+        component: LoginPage,
+        private: false,
     },
     {
         path:"/sign-up",
-        component: SignUp
+        component: SignUp,
+        private: false,
     }
 ]
 
