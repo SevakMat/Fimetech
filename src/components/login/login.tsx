@@ -14,10 +14,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { loginEffect } from '../../store/effects/auth.effects';
+import { loginEffect, setLoadingEffect } from '../../store/effects/auth.effects';
 import { AppDispatch, RootState, useAppSelector } from '../../store';
 import { useDispatch } from 'react-redux';
 import {PublicButton, PublicLoadingButton} from '../../public/Button';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props: any) {
     return (
@@ -36,22 +37,14 @@ const theme = createTheme();
 
 const Login = () => {
     const dispatch: AppDispatch = useDispatch()
-    
-    const isLoggedIn = useAppSelector((state: RootState) => state.auth.isLoggedIn)
-    console.log(222222222,isLoggedIn);
-    
+    const authLoading = useAppSelector((state: RootState) => state.auth.authLoading)
+    const navigate = useNavigate();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        dispatch(loginEffect({email:data.get('email') as string,password:data.get('password')as string},navigate))
         
-        
-        dispatch(loginEffect({email:data.get('email') as string,password:data.get('password')as string}))
-        console.log({
-            email: data.get('email'),
-            password:data.get('password')
-        });
     };
 
     return (
@@ -97,8 +90,10 @@ const Login = () => {
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
                         />
-                        <PublicButton text={"Sign in"}/>
-                        <PublicLoadingButton/>
+                       {
+                        authLoading?<PublicLoadingButton/> : <PublicButton text={"Sign in"}/>
+                       } 
+                       
                          
                         <Grid container>
                             <Grid item xs>
