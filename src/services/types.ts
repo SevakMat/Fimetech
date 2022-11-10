@@ -10,6 +10,6 @@ export interface SignInData{
     password:string 
 }
 export interface RefreshToken{
-    refreshToken:string,
+    refreshToken:string |null,
 }
 

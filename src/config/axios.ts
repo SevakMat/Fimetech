@@ -1,4 +1,5 @@
 import axios from "axios"
+import { SignInByRefreshTocenRequest } from "../services/auth.service"
 import {apiBaseUrl} from "./index"
 // import {store} from "../store"
 
@@ -7,7 +8,9 @@ const instance = axios.create({
 })
 
 instance.interceptors.request.use(function (config:any) {
+    
     const token = localStorage.getItem("accessToken")
+    console.log("chuasfjnho",token);
     config.headers.Authorization = token ? `Bearer ${token}` : ""
     return config
 })
@@ -19,9 +22,7 @@ instance.interceptors.response.use(
         if (err.response?.status === 401 && !err.config.alreadyRetried && err.config.url !== 'api/v1/auth/login') {
             try {
                 const userRefreshToken = localStorage.getItem("refreshToken")
-                const res = await axios.post(`${apiBaseUrl}/api/v1/auth/refresh`, {
-                    refreshToken: userRefreshToken,
-                })
+                const res = await SignInByRefreshTocenRequest( {refreshToken: userRefreshToken})
                 const {accessToken, refreshToken} = res.data
                 if(refreshToken){
                     await localStorage.setItem("accessToken", accessToken)
@@ -40,3 +41,4 @@ instance.interceptors.response.use(
         return Promise.reject(err);
     }
 )
+export default instance
