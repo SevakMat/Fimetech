@@ -3,9 +3,8 @@ import { toast } from "react-toastify";
 import { AppDispatch } from "..";
 import {
   loginRequest,
-  loginRequestTest,
-  logOutRequestTest,
-  SignUpRequestTest,
+  logOutRequest,
+  SignUpRequest,
 } from "../../services/auth.service";
 import { LoginData, SignInData } from "../../services/types";
 import {
@@ -22,7 +21,7 @@ export const loginEffect = (
     try {
       dispatch(setLoadingEffect(true));
       // Get user
-      const result = await loginRequestTest(loginData);
+      const result = await loginRequest(loginData);
       const {
         data: { accessToken, refreshToken, user },
       } = result;
@@ -53,7 +52,7 @@ export const logOutEffect = (navigate: NavigateFunction): any => {
     try {
       dispatch(setLoadingEffect(true));
       // Get user
-     await logOutRequestTest();
+     await logOutRequest();
 
       await localStorage.clear();
 
@@ -75,7 +74,7 @@ export const signUpEffect = (signInData: SignInData,navigate:NavigateFunction): 
     try {
       dispatch(setLoadingEffect(true));
       // Get user
-      await SignUpRequestTest(signInData);
+      await SignUpRequest(signInData);
       
       toast.success("Successfully sign Up");
       navigate('/login');
