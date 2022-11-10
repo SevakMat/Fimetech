@@ -1,17 +1,31 @@
-import Routers from "./routers"
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { IRouteItem } from "./types";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import modules from "./routers";
+import { RootState } from "../store";
+import {useAppSelector} from "../store"
 
-const RoutersContainer: () => JSX.Element = ()=>{
-        return(
-            <BrowserRouter>
-                <Routes>
-                    {
-                        Routers.map(({path, component: Component}: IRouteItem,index:number) => <Route key={index} path={path} element={<Component />} /> )
-                    }
-                </Routes>
-            </BrowserRouter>
-        )
+const RoutersContainer: () => JSX.Element = () => {
+  const {isLoggedIn} = useAppSelector((state:RootState)=>{return state.auth})
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Create Login Page */}
+        {modules.map(({ isPrivate, routerProps }) => {
+          return routerProps.map((flan) => (
+            isPrivate && !isLoggedIn ?
+                // If Router is Protected And So You are dont Auth Redirec to Login Page
+                <Route path={flan.path} element={<Navigate to="/login" />} />
+                : !isPrivate && isLoggedIn ?
+                  <Route path={flan.path} element={<Navigate to="/dashboard" />} />
+                :
+                // Else You Can Go that Route
+                <Route path={flan.path} element={flan.element} />
+            ))
+        }
+        )}
+        <Route path={"*"} element={< >not found</>} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default RoutersContainer
