@@ -1,7 +1,7 @@
 import { RouteProps } from "react-router-dom";
 
 interface ModuleRoutes {
-    routerProps: RouteProps
+    routerProps: RouteProps[]
 }
 
 export default ModuleRoutes

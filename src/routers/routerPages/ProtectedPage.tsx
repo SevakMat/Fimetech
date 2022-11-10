@@ -4,11 +4,13 @@ import ProtectedRoute from "../types/ProtectedRoute"
 
 
 const ProtectedPageRoute: ProtectedRoute = {
-    isProtected: true,
-    routerProps:{
-        path: "/dashboard",
-        element: <DashboardPage/>,
-    }
+    isPrivate: true,
+    routerProps:[
+        {
+            path: "/dashboard",
+            element: <DashboardPage/>,
+        }
+    ]
 }
 
 

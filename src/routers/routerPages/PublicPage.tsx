@@ -1,20 +1,21 @@
+import SignUp from "../../components/registrationPage/SignUp"
 import LoginPage from "../../pages/Login"
 import PublicRouter from "../types/PublicRouter"
 
-const PublicPage = (): JSX.Element => {
-    return (
-        <div>
-            PublicPage
-        </div>
-    )
-}
+
 
 const PublicPageRoute: PublicRouter = {
-    isProtected: false,
-    routerProps:{
-        path: "/login",
-        element: <LoginPage/>  
-    }
+    isPrivate: false,
+    routerProps: [
+        {
+            path: "/login",
+            element: <LoginPage />
+        },
+        {
+            path: "/sign-up",
+            element: <SignUp/>,
+        }
+    ]
 }
 
 //     {

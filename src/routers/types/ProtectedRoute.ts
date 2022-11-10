@@ -1,7 +1,7 @@
 import ModuleRoutes from "./ModuleRoutes"
 
 interface ProtectedRoute extends ModuleRoutes {
-    isProtected: true
+    isPrivate: true
 }
 
 export default ProtectedRoute

@@ -1,30 +1,31 @@
-import Routers from "./routers"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import LoginPage from "../pages/Login";
 import modules from "./routers";
-import { useState } from "react";
+import { RootState } from "../store";
+import {useAppSelector} from "../store"
 
-
-const RoutersContainer: () => JSX.Element = ()=>{
-  const [isAuth, setIsAuth] = useState<boolean>(false)
-    console.log("modulesmodulesmodules",modules);
-    
-        return(
-            <BrowserRouter>
-            <Routes>
-              {/* Create Login Page */}
-              <Route path={"/login"} element={<LoginPage />}/> 
-              {modules.map(({isProtected, routerProps}) => (
-                isProtected && !isAuth ?
+const RoutersContainer: () => JSX.Element = () => {
+  const {isLoggedIn} = useAppSelector((state:RootState)=>{return state.auth})
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Create Login Page */}
+        {modules.map(({ isPrivate, routerProps }) => {
+          return routerProps.map((flan) => (
+            isPrivate && !isLoggedIn ?
                 // If Router is Protected And So You are dont Auth Redirec to Login Page
-                <Route key={routerProps.path} element={<Navigate to="/login" replace />} /> :
+                <Route path={flan.path} element={<Navigate to="/login" />} />
+                : !isPrivate && isLoggedIn ?
+                  <Route path={flan.path} element={<Navigate to="/dashboard" />} />
+                :
                 // Else You Can Go that Route
-                <Route key={routerProps.path} {...routerProps}/>
-              ))}
-              <Route path={"*"} element={< >not found</>}/>
-            </Routes>
-          </BrowserRouter>
-        )
+                <Route path={flan.path} element={flan.element} />
+            ))
+        }
+        )}
+        <Route path={"*"} element={< >not found</>} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default RoutersContainer

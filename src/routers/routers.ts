@@ -8,30 +8,6 @@ import PublicPageRoute from "./routerPages/PublicPage"
 import ProtectedRoute from "./types/ProtectedRoute"
 import PublicRouter from "./types/PublicRouter"
 
-// const Routers: IRouteItem[] = [
-//     {
-//         path:"/dashboard",
-//         component: DashboardPage,
-//         private: true
-//     },
-//     {
-//         path:"/login",
-//         component: LoginPage,
-//         private: false,
-//     },
-//     {
-//         path:"/sign-up",
-//         component: SignUp,
-//         private: false,
-//     }
-// ]
-
-// export default Routers
-
-// Protected Routes ...
-
-// Public Routes ...
-
 export type RoutesType = ProtectedRoute | PublicRouter
 
 const modules: RoutesType[] = [ProtectedPageRoute, PublicPageRoute]
