@@ -7,7 +7,10 @@ export interface SignInData{
     firstName:string
     lastName:string
     email:string,
-    password:string 
+    password:string,
+    phone:string 
+    role:string 
+
 }
 export interface RefreshToken{
     refreshToken:string |null,
