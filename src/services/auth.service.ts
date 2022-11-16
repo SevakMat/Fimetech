@@ -1,6 +1,6 @@
 import axios from "../config/axios"
 
-import { LoginData, RefreshToken, SignInData } from "./types"
+import { Address, LoginData, RefreshToken, SignInData } from "./types"
 
 export const loginRequest = async (loginData: LoginData): Promise<any> => {
     return axios.post("api/v1/auth/login", {loginData})
@@ -16,6 +16,11 @@ export const SignUpRequest = async (signInData: SignInData): Promise<any> => {
 export const SignInByRefreshTocenRequest = async (refreshToken: RefreshToken): Promise<any> => {
     return axios.post("api/v1/auth/signInByRefreshToken", {refreshToken})
 }
+export const SendAddressesRequest = async (AddressesList: Address[]): Promise<any> => {
+    return axios.post("api/v1/auth/addresses", {AddressesList})
+}
+
+
 
 
 /////////////////////////////////////// Test servises /////////////////////////////

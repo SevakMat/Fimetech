@@ -16,3 +16,7 @@ export interface RefreshToken{
     refreshToken:string |null,
 }
 
+export interface Address{
+    lat:string
+    lng:string
+}
