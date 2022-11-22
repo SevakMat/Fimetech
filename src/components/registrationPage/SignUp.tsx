@@ -1,6 +1,6 @@
 
 
-import * as React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -18,6 +18,7 @@ import { AppDispatch } from '../../store';
 import { useDispatch } from 'react-redux';
 import { signUpEffect } from '../../store/effects/auth.effects';
 import { useNavigate } from 'react-router-dom';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 function Copyright(props: any) {
   return (
@@ -34,13 +35,16 @@ function Copyright(props: any) {
 
 const theme = createTheme();
 
-const SignUp = ()=> {
+const SignUp = () => {
   const dispatch: AppDispatch = useDispatch()
   const navigate = useNavigate();
+  const [formRole, setFormRole] = useState<string>()
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
     console.log({
       email: data.get('email'),
       password: data.get('password'),
@@ -48,14 +52,18 @@ const SignUp = ()=> {
       LatName: data.get('lastName'),
 
     });
+
+
     dispatch(signUpEffect({
-      email:data.get('email') as string,
-      password:data.get('password')as string,
+      email: data.get('email') as string,
+      password: data.get('password') as string,
       firstName: data.get('firstName') as string,
       lastName: data.get('lastName') as string,
+      phoneNumber: data.get("phone") as string,
+      role: formRole as string
     },
-    navigate))
-    
+      navigate))
+
   };
 
   return (
@@ -113,6 +121,34 @@ const SignUp = ()=> {
                 <TextField
                   required
                   fullWidth
+                  id="phone"
+                  label="Phone"
+                  name="phone"
+                  autoComplete="phone"
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={"Role1"}
+                    label="Age"
+                    onChange={(e) => { setFormRole(e.target.value) }}
+                  >
+                    <MenuItem value={"Role1"}>Role1</MenuItem>
+                    <MenuItem value={"Role2"}>Role2</MenuItem>
+                    <MenuItem value={"Role3"}>Role3</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
                   name="password"
                   label="Password"
                   type="password"
@@ -120,12 +156,7 @@ const SignUp = ()=> {
                   autoComplete="new-password"
                 />
               </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid>
+
             </Grid>
             <Button
               type="submit"
@@ -150,4 +181,4 @@ const SignUp = ()=> {
   );
 }
 
-export default  SignUp
+export default SignUp
