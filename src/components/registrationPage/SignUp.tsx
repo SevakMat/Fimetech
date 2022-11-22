@@ -1,6 +1,6 @@
 
 
-import  React, { useState } from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -38,13 +38,13 @@ const theme = createTheme();
 const SignUp = () => {
   const dispatch: AppDispatch = useDispatch()
   const navigate = useNavigate();
-  const [formRole,setFormRole]= useState<string>()
+  const [formRole, setFormRole] = useState<string>()
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-   
+
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    
+
     console.log({
       email: data.get('email'),
       password: data.get('password'),
@@ -52,15 +52,15 @@ const SignUp = () => {
       LatName: data.get('lastName'),
 
     });
-    
+
 
     dispatch(signUpEffect({
       email: data.get('email') as string,
       password: data.get('password') as string,
       firstName: data.get('firstName') as string,
       lastName: data.get('lastName') as string,
-      phone:data.get("phone") as string,
-      role:formRole as string
+      phoneNumber: data.get("phone") as string,
+      role: formRole as string
     },
       navigate))
 
@@ -136,7 +136,7 @@ const SignUp = () => {
                     id="demo-simple-select"
                     value={"Role1"}
                     label="Age"
-                    onChange={(e)=>{setFormRole(e.target.value)}}
+                    onChange={(e) => { setFormRole(e.target.value) }}
                   >
                     <MenuItem value={"Role1"}>Role1</MenuItem>
                     <MenuItem value={"Role2"}>Role2</MenuItem>

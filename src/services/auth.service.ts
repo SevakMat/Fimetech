@@ -3,21 +3,21 @@ import axios from "../config/axios"
 import { Address, LoginData, RefreshToken, SignInData } from "./types"
 
 export const loginRequest = async (loginData: LoginData): Promise<any> => {
-    return axios.post("api/v1/auth/login", {loginData})
+    return axios.post("api/v1/auth/sign-in", { ...loginData })
 }
 export const logOutRequest = async (): Promise<any> => {
-    return axios.post("api/v1/auth/logout", {})
+    return axios.post("api/v1/auth/sign-out", {})
 }
 
 export const SignUpRequest = async (signInData: SignInData): Promise<any> => {
-    return axios.post("api/v1/auth/signUp", {signInData})
+    return axios.post("api/v1/auth/sign-up", { ...signInData })
 }
 
 export const SignInByRefreshTocenRequest = async (refreshToken: RefreshToken): Promise<any> => {
-    return axios.post("api/v1/auth/signInByRefreshToken", {refreshToken})
+    return axios.post("api/v1/auth/sign-in-by-refresh-token", { ...refreshToken })
 }
 export const SendAddressesRequest = async (AddressesList: Address[]): Promise<any> => {
-    return axios.post("api/v1/auth/addresses", {AddressesList})
+    return axios.post("api/v1/auth/addresses", { AddressesList })
 }
 
 

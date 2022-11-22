@@ -1,53 +1,50 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { PublicButton } from "../../public/Button";
-import { AppDispatch } from "../../store";
-import { sendAddressesEffect } from "../../store/effects/auth.effects";
+import React, { useState } from "react";
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import "./googleMap.css"
+interface Markers {
+    lat: number
+    lng: number
 
-
-
-function Map() {
-    const dispatch: AppDispatch = useDispatch()
-    const navigate = useNavigate();
-
-
-
-const testAddresses = [
-    {
-        lat:"11111111111",
-        lng:"11111111111"
-    },
-    {
-        lat:"11111111111",
-        lng:"11111111111"
-    },
-    {
-        lat:"11111111111",
-        lng:"11111111111"
-    },
-    {
-        lat:"11111111111",
-        lng:"11111111111"
-    }
-]
-
-    const sendAddresses =()=>{
-        dispatch(sendAddressesEffect(testAddresses,navigate))  
-        
-    }
-
-
-
-
-    return (
-        <div
-        >
-             <div onClick={()=>{sendAddresses()}}>
-            <PublicButton text="Submit"/>
-            </div>
-        </div>
-    );
 }
 
-export default Map;
+export default function Map() {
+
+    const center = { lat: 40.204074, lng: 44.511667 }
+    const [markers, setMarker] = useState<Markers[]>([center])
+
+    const { isLoaded } = useLoadScript({
+        googleMapsApiKey: "AIzaSyBDTrYT2TXSCRlA8MPXkLCqdF_2q7OsTXc",
+    });
+
+    const setaMarkerCordinats = (newLat: number, newLng: number) => {
+        setMarker((state: Markers[]) => {
+            return (
+                [...state, ...[{ lat: newLat, lng: newLng }]]
+            )
+        })
+
+    }
+
+    return (
+        isLoaded ?
+            <>
+                <GoogleMap
+                    zoom={10}
+                    center={center}
+                    mapContainerClassName="map-container"
+                    onClick={(e: any) => {
+                        console.log();
+
+                        setaMarkerCordinats(e.latLng.lat(), e.latLng.lng())
+                    }}
+                >
+                    {markers.map((markers: any, key: number) => {
+                        return <Marker position={markers} key={key} />
+                    })}
+
+                </GoogleMap>
+            </>
+            :
+            <div>asd</div>
+    );
+}
