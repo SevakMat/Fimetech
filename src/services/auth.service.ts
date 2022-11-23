@@ -1,6 +1,6 @@
 import axios from "../config/axios"
 
-import { Address, LoginData, RefreshToken, SignInData } from "./types"
+import { LoginData, MarkerType, RefreshToken, SignInData } from "./types"
 
 export const loginRequest = async (loginData: LoginData): Promise<any> => {
     return axios.post("api/v1/auth/sign-in", { ...loginData })
@@ -16,8 +16,8 @@ export const SignUpRequest = async (signInData: SignInData): Promise<any> => {
 export const SignInByRefreshTocenRequest = async (refreshToken: RefreshToken): Promise<any> => {
     return axios.post("api/v1/auth/sign-in-by-refresh-token", { ...refreshToken })
 }
-export const SendAddressesRequest = async (AddressesList: Address[]): Promise<any> => {
-    return axios.post("api/v1/auth/addresses", { AddressesList })
+export const SendAdressesRequest = async (AddressesList: MarkerType[]): Promise<any> => {
+    return axios.post("api/v1/google-map/addresses", [...AddressesList])
 }
 
 

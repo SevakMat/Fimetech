@@ -17,7 +17,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { loginEffect, setLoadingEffect } from '../../store/effects/auth.effects';
 import { AppDispatch, RootState, useAppSelector } from '../../store';
 import { useDispatch } from 'react-redux';
-import {PublicButton, PublicLoadingButton} from '../../public/Button';
+import { PublicButton, PublicLoadingButton } from '../../public/Button';
 import { useNavigate } from 'react-router-dom';
 
 function Copyright(props: any) {
@@ -43,8 +43,8 @@ const Login = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        dispatch(loginEffect({email:data.get('email') as string,password:data.get('password')as string},navigate))
-        
+        dispatch(loginEffect({ email: data.get('email') as string, password: data.get('password') as string }, navigate))
+
     };
 
     return (
@@ -90,11 +90,11 @@ const Login = () => {
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
                         />
-                       {
-                        authLoading?<PublicLoadingButton/> : <PublicButton text={"Sign in"}/>
-                       } 
-                       
-                         
+                        {
+                            authLoading ? <PublicLoadingButton /> : <PublicButton text={"Sign in"} />
+                        }
+
+
                         <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="body2">

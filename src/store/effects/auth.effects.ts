@@ -4,10 +4,10 @@ import { AppDispatch } from "..";
 import {
   loginRequest,
   logOutRequest,
-  SendAddressesRequest,
+  SendAdressesRequest,
   SignUpRequest,
 } from "../../services/auth.service";
-import { Address, LoginData, SignInData } from "../../services/types";
+import { LoginData, MarkerType, SignInData } from "../../services/types";
 import {
   loginRequestSuccess,
   logOutRequestSuccess,
@@ -24,10 +24,9 @@ export const loginEffect = (
       // Get user
       const result = await loginRequest(loginData);
       const {
-        data: { accessToken, refreshToken, user },
+        data: { access_token, refreshToken, user },
       } = result;
-      await localStorage.setItem("accessToken", accessToken);
-      await localStorage.setItem("refreshToken", refreshToken);
+      await localStorage.setItem("accessToken", access_token);
       dispatch(loginRequestSuccess(user));
 
       toast.success("Successfully logged in");
@@ -53,7 +52,7 @@ export const logOutEffect = (navigate: NavigateFunction): any => {
     try {
       dispatch(setLoadingEffect(true));
       // Get user
-     await logOutRequest();
+      await logOutRequest();
 
       await localStorage.clear();
 
@@ -70,13 +69,13 @@ export const logOutEffect = (navigate: NavigateFunction): any => {
     }
   };
 };
-export const signUpEffect = (signInData: SignInData,navigate:NavigateFunction): any => {
+export const signUpEffect = (signInData: SignInData, navigate: NavigateFunction): any => {
   return async (dispatch: AppDispatch) => {
     try {
       dispatch(setLoadingEffect(true));
       // Get user
       await SignUpRequest(signInData);
-      
+
       toast.success("Successfully sign Up");
       navigate('/login');
 
@@ -90,18 +89,18 @@ export const signUpEffect = (signInData: SignInData,navigate:NavigateFunction): 
   };
 };
 
-export const sendAddressesEffect = (AddressesList: Address[],navigate:NavigateFunction): any => {
+export const sendAddressesEffect = (AddressesList: MarkerType[], navigate: NavigateFunction): any => {
   return async (dispatch: AppDispatch) => {
     try {
       dispatch(setLoadingEffect(true));
       // Get user
-      await SendAddressesRequest(AddressesList);
+      await SendAdressesRequest(AddressesList);
       toast.success("Successfully sended addresses");
     } catch (error: any) {
       toast.error("sended addresses faild");
     } finally {
       console.log("pahhho");
-      
+
     }
   };
 };
