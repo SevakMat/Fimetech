@@ -15,8 +15,8 @@ export interface SignInData {
 export interface RefreshToken {
     refreshToken: string | null,
 }
+export interface MarkerType {
+    lat: number
+    lng: number
 
-export interface Address {
-    lat: string
-    lng: string
 }

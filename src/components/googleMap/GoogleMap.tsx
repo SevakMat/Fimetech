@@ -1,29 +1,37 @@
 import React, { useState } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import "./googleMap.css"
-interface Markers {
-    lat: number
-    lng: number
+import { PublicButton } from "../../public/Button";
+import { AppDispatch } from "../../store";
+import { useDispatch } from "react-redux";
+import { sendAddressesEffect } from "../../store/effects/auth.effects";
+import { useNavigate } from "react-router-dom";
+import { MarkerType } from "../../services/types";
 
-}
 
 export default function Map() {
+    const dispatch: AppDispatch = useDispatch()
+    const navigate = useNavigate();
 
     const center = { lat: 40.204074, lng: 44.511667 }
-    const [markers, setMarker] = useState<Markers[]>([center])
+    const [markers, setMarker] = useState<MarkerType[]>([center])
 
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: "AIzaSyBDTrYT2TXSCRlA8MPXkLCqdF_2q7OsTXc",
     });
 
     const setaMarkerCordinats = (newLat: number, newLng: number) => {
-        setMarker((state: Markers[]) => {
+        setMarker((state: MarkerType[]) => {
             return (
                 [...state, ...[{ lat: newLat, lng: newLng }]]
             )
         })
-
     }
+
+    const sendAddreses = () => {
+        dispatch(sendAddressesEffect(markers, navigate))
+    }
+
 
     return (
         isLoaded ?
@@ -43,6 +51,9 @@ export default function Map() {
                     })}
 
                 </GoogleMap>
+                <div onClick={() => { sendAddreses() }}>
+                    <PublicButton text={"sendAddreses"} />
+                </div>
             </>
             :
             <div>asd</div>
