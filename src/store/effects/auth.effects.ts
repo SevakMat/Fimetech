@@ -4,9 +4,9 @@ import { AppDispatch } from "..";
 import {
   loginRequest,
   logOutRequest,
-  SendAdressesRequest,
   SignUpRequest,
 } from "../../services/auth.service";
+import { SendAdressesRequest } from "../../services/googleMap.service";
 import { LoginData, MarkerType, SignInData } from "../../services/types";
 import {
   loginRequestSuccess,
