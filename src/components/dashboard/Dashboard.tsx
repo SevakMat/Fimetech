@@ -10,20 +10,20 @@ const Dashboard = () => {
     const navigate = useNavigate();
 
 
-    const logout = ()=>{
-        dispatch(logOutEffect(navigate))  
+    const logout = () => {
+        dispatch(logOutEffect(navigate))
     }
 
-    
+
 
     return (
         <div>
-            Dashboard
-            <GoogleMap/>
-
-            <div onClick={()=>{logout()}}>
-            <PublicButton text="logout"/>
+            <div onClick={() => { logout() }}>
+                <PublicButton text="logout" />
             </div>
+
+            Dashboard
+            <GoogleMap />
         </div>
     )
 }

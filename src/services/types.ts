@@ -9,7 +9,7 @@ export interface SignInData {
     email: string,
     password: string,
     phoneNumber: string
-    role: string
+    level: string
 
 }
 export interface RefreshToken {

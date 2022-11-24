@@ -13,9 +13,8 @@ export const PublicButton: React.FC<IButton> = (props) => {
     return (
         <Button
             type="submit"
-            fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 1, mb: 1 }}
         >
             {props.text}
         </Button>
