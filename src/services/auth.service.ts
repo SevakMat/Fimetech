@@ -16,8 +16,11 @@ export const SignUpRequest = async (signInData: SignInData): Promise<any> => {
 export const SignInByRefreshTocenRequest = async (refreshToken: RefreshToken): Promise<any> => {
     return axios.post("api/v1/auth/sign-in-by-refresh-token", { ...refreshToken })
 }
-export const SendAdressesRequest = async (AddressesList: MarkerType[]): Promise<any> => {
-    return axios.post("api/v1/google-map/addresses", [...AddressesList])
+export const SendAdressesRequest = async (AddressesList: MarkerType[],userId:string | undefined): Promise<any> => {
+    return axios.post("api/v1/google-map/addresses", {
+        addresses:[...AddressesList],
+        userId:userId
+    })
 }
 
 

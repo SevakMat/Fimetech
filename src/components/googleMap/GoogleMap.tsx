@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import "./googleMap.css"
 import { PublicButton } from "../../public/Button";
-import { AppDispatch } from "../../store";
+import { AppDispatch, RootState, useAppSelector } from "../../store";
 import { useDispatch } from "react-redux";
 import { sendAddressesEffect } from "../../store/effects/auth.effects";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +15,10 @@ export default function Map() {
 
     const center = { lat: 40.204074, lng: 44.511667 }
     const [markers, setMarker] = useState<MarkerType[]>([center])
+    const {user} = useAppSelector((state: RootState) => {return state.auth })
+    console.log(33333333,user?.userId);
+    
+
 
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: "AIzaSyBDTrYT2TXSCRlA8MPXkLCqdF_2q7OsTXc",
@@ -29,7 +33,7 @@ export default function Map() {
     }
 
     const sendAddreses = () => {
-        dispatch(sendAddressesEffect(markers, navigate))
+        dispatch(sendAddressesEffect(markers,user?.userId, navigate))
     }
 
 

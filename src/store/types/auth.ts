@@ -15,7 +15,8 @@ export interface AuthState {
 
 export interface User {
     id?: string;
-    avatarUrl?: string,
+    userId?:string;
+    avatarUrl?: string;
     email?: string;
     firstName?: string;
     lastName?: string;
