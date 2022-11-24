@@ -60,7 +60,7 @@ const SignUp = () => {
       firstName: data.get('firstName') as string,
       lastName: data.get('lastName') as string,
       phoneNumber: data.get("phone") as string,
-      role: formRole as string
+      level: formRole as string
     },
       navigate))
 
@@ -130,17 +130,17 @@ const SignUp = () => {
 
               <Grid item xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                  <InputLabel id="demo-simple-select-label">Level</InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={"Role1"}
-                    label="Age"
+                    value={formRole}
+                    label="Level"
                     onChange={(e) => { setFormRole(e.target.value) }}
                   >
-                    <MenuItem value={"Role1"}>Role1</MenuItem>
-                    <MenuItem value={"Role2"}>Role2</MenuItem>
-                    <MenuItem value={"Role3"}>Role3</MenuItem>
+                    <MenuItem value={"level1"}>Level1</MenuItem>
+                    <MenuItem value={"level2"}>Level2</MenuItem>
+                    <MenuItem value={"level3"}>Level3</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
