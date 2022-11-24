@@ -89,12 +89,12 @@ export const signUpEffect = (signInData: SignInData, navigate: NavigateFunction)
   };
 };
 
-export const sendAddressesEffect = (AddressesList: MarkerType[], navigate: NavigateFunction): any => {
+export const sendAddressesEffect = (AddressesList: MarkerType[],userId:string | undefined, navigate: NavigateFunction): any => {
   return async (dispatch: AppDispatch) => {
     try {
       dispatch(setLoadingEffect(true));
       // Get user
-      await SendAdressesRequest(AddressesList);
+      await SendAdressesRequest(AddressesList,userId);
       toast.success("Successfully sended addresses");
     } catch (error: any) {
       toast.error("sended addresses faild");
