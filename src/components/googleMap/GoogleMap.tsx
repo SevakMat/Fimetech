@@ -16,12 +16,9 @@ export default function Map() {
     const center = { lat: 40.204074, lng: 44.511667 }
     const [markers, setMarker] = useState<MarkerType[]>([center])
     const {user} = useAppSelector((state: RootState) => {return state.auth })
-    console.log(33333333,user?.userId);
-    
-
 
     const { isLoaded } = useLoadScript({
-        googleMapsApiKey: "AIzaSyBDTrYT2TXSCRlA8MPXkLCqdF_2q7OsTXc",
+        googleMapsApiKey: process.env.GOOGLE_MAP_API_KEY as string,
     });
 
     const setaMarkerCordinats = (newLat: number, newLng: number) => {
