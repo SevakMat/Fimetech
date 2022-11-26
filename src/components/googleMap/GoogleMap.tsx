@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import "./googleMap.css"
 import { PublicButton } from "../../public/Button";
 import { AppDispatch, RootState, useAppSelector } from "../../store";
 import { useDispatch } from "react-redux";
-import { sendAddressesEffect } from "../../store/effects/auth.effects";
-import { useNavigate } from "react-router-dom";
 import { MarkerType } from "../../services/types";
+import { IGoogleMapContainer } from "../interfaces";
+import { sendAddressesEffect } from "../../store/effects/googleMap.effects";
 
 
-export default function Map() {
+
+
+const GoogleMapContainer: FC<IGoogleMapContainer> = ({ user }) => {
     const dispatch: AppDispatch = useDispatch()
-    const navigate = useNavigate();
 
     const center = { lat: 40.204074, lng: 44.511667 }
     const [markers, setMarker] = useState<MarkerType[]>([center])
-    const {user} = useAppSelector((state: RootState) => {return state.auth })
 
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.GOOGLE_MAP_API_KEY as string,
@@ -30,7 +30,7 @@ export default function Map() {
     }
 
     const sendAddreses = () => {
-        dispatch(sendAddressesEffect(markers,user?.userId, navigate))
+        dispatch(sendAddressesEffect(markers, user.userId))
     }
 
 
@@ -60,3 +60,5 @@ export default function Map() {
             <div>asd</div>
     );
 }
+
+export default GoogleMapContainer

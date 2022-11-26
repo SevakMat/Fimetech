@@ -1,13 +1,15 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { PublicButton } from "../../public/Button"
-import { AppDispatch } from "../../store"
+import { AppDispatch, RootState, useAppSelector } from "../../store"
 import { logOutEffect } from "../../store/effects/auth.effects";
+import Addresses from "../googleMap/Addresses";
 import GoogleMap from "../googleMap/GoogleMap";
 
 const Dashboard = () => {
     const dispatch: AppDispatch = useDispatch()
     const navigate = useNavigate();
+    const { user } = useAppSelector((state: RootState) => { return state.auth })
 
 
     const logout = () => {
@@ -22,8 +24,8 @@ const Dashboard = () => {
                 <PublicButton text="logout" />
             </div>
 
-            Dashboard
-            <GoogleMap />
+            <GoogleMap user={user} />
+            <Addresses user={user} />
         </div>
     )
 }
