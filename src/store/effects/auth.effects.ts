@@ -4,10 +4,9 @@ import { AppDispatch } from "..";
 import {
   loginRequest,
   logOutRequest,
-  SendAdressesRequest,
   SignUpRequest,
 } from "../../services/auth.service";
-import { LoginData, MarkerType, SignInData } from "../../services/types";
+import { LoginData, SignInData } from "../../services/types";
 import {
   loginRequestSuccess,
   logOutRequestSuccess,
@@ -85,22 +84,6 @@ export const signUpEffect = (signInData: SignInData, navigate: NavigateFunction)
       toast.error("Logined faild");
     } finally {
       dispatch(setLoadingEffect(false));
-    }
-  };
-};
-
-export const sendAddressesEffect = (AddressesList: MarkerType[],userId:string | undefined, navigate: NavigateFunction): any => {
-  return async (dispatch: AppDispatch) => {
-    try {
-      dispatch(setLoadingEffect(true));
-      // Get user
-      await SendAdressesRequest(AddressesList,userId);
-      toast.success("Successfully sended addresses");
-    } catch (error: any) {
-      toast.error("sended addresses faild");
-    } finally {
-      console.log("pahhho");
-
     }
   };
 };
