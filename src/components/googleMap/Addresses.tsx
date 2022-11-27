@@ -22,7 +22,7 @@ const AddressesContainer: FC<IAddressesContainer> = ({ user }) => {
   return (
     <div>
       {
-        addresses.map((address) => {
+        addresses && addresses.map((address) => {
           return (
             <div>
               as

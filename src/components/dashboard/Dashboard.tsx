@@ -20,10 +20,6 @@ const Dashboard = () => {
 
     return (
         <div>
-            <div onClick={() => { logout() }}>
-                <PublicButton text="logout" />
-            </div>
-
             <GoogleMap user={user} />
             <Addresses user={user} />
         </div>
