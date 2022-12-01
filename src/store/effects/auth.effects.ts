@@ -23,7 +23,7 @@ export const loginEffect = (
       // Get user
       const result = await loginRequest(loginData);
       const {
-        data: { access_token, refreshToken, user },
+        data: { access_token, user },
       } = result;
       await localStorage.setItem("accessToken", access_token);
       dispatch(loginRequestSuccess(user));
