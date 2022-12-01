@@ -1,13 +1,13 @@
 import React, { FC } from "react"
 import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
 import { getAddressesEffect } from "../../store/effects/googleMap.effects"
 import { IAddressesContainer } from "../interfaces"
+import "../scss/addresses.scss"
+
 
 const AddressesContainer: FC<IAddressesContainer> = ({ user }) => {
 
   const [addresses, setAddresses] = useState([])
-  const distpatch = useDispatch()
   useEffect(() => {
     const fetchData = async () => {
       const address = await getAddressesEffect(user.userId)
@@ -20,12 +20,12 @@ const AddressesContainer: FC<IAddressesContainer> = ({ user }) => {
 
 
   return (
-    <div>
+    <div className="addressesBlok">
       {
-        addresses.map((address) => {
+        addresses && addresses.map((address,index) => {
           return (
-            <div>
-              as
+            <div  key={index}>
+              asasdasdasd
             </div>
           )
         })

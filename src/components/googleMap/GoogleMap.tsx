@@ -2,12 +2,12 @@ import React, { FC, useState } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import "./googleMap.css"
 import { PublicButton } from "../../public/Button";
-import { AppDispatch, RootState, useAppSelector } from "../../store";
+import { AppDispatch } from "../../store";
 import { useDispatch } from "react-redux";
 import { MarkerType } from "../../services/types";
 import { IGoogleMapContainer } from "../interfaces";
 import { sendAddressesEffect } from "../../store/effects/googleMap.effects";
-
+import "../scss/googleMap.scss"
 
 
 
@@ -36,26 +36,27 @@ const GoogleMapContainer: FC<IGoogleMapContainer> = ({ user }) => {
 
     return (
         isLoaded ?
-            <>
-                <GoogleMap
-                    zoom={10}
-                    center={center}
-                    mapContainerClassName="map-container"
-                    onClick={(e: any) => {
-                        console.log();
+            <div className="googleMapBlok" >
+                <div className="googleMap" >
+                    <GoogleMap
+                        zoom={10}
+                        center={center}
+                        mapContainerClassName="map-container"
+                        onClick={(e: any) => {
+                            console.log();
+                            setaMarkerCordinats(e.latLng.lat(), e.latLng.lng())
+                        }}
+                    >
+                        {markers.map((markers: any, key: number) => {
+                            return <Marker position={markers} key={key} />
+                        })}
+                    </GoogleMap>
+                </div>
 
-                        setaMarkerCordinats(e.latLng.lat(), e.latLng.lng())
-                    }}
-                >
-                    {markers.map((markers: any, key: number) => {
-                        return <Marker position={markers} key={key} />
-                    })}
-
-                </GoogleMap>
                 <div onClick={() => { sendAddreses() }}>
                     <PublicButton text={"sendAddreses"} />
                 </div>
-            </>
+            </div>
             :
             <div>asd</div>
     );
